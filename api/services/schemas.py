@@ -29,3 +29,10 @@ class ExplainResponse(BaseModel):
 class SimulateRequest(BaseModel):
 	customer: Dict[str, Any]
 	modifications: Dict[str, Any]
+	question: Optional[str] = None
+	customer_meta: Optional[Dict[str, Any]] = None
+
+
+class SimulateResponse(PredictionOutput):
+	answer: Optional[str] = None
+	prompt: Optional[str] = None

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from api.routers import predict, explain, simulate
+from .routers import predict, explain, simulate
 
 
 def create_app() -> FastAPI:
