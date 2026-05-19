@@ -6,4 +6,4 @@ shap
 kagglehub
 numpy
 pandas
-imblearn
+imbalanced-learn
