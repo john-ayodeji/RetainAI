@@ -1,0 +1,23 @@
+[
+  "Age",
+  "Gender",
+  "Tenure",
+  "Usage Frequency",
+  "Support Calls",
+  "Payment Delay",
+  "Total Spend",
+  "Last Interaction",
+  "spend_per_tenure",
+  "support_call_rate",
+  "usage_per_tenure",
+  "is_dormant",
+  "has_payment_issues",
+  "spend_tier",
+  "age_group",
+  "sub_Basic",
+  "sub_Premium",
+  "sub_Standard",
+  "contract_Annual",
+  "contract_Monthly",
+  "contract_Quarterly"
+]
