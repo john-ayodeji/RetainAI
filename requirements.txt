@@ -12,3 +12,4 @@ openai
 joblib
 python-dotenv
 requests
+google-genai

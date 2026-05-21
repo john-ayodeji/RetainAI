@@ -1,49 +1,47 @@
 from fastapi import APIRouter, HTTPException
 from api.services.schemas import SimulateRequest, SimulateResponse
-from api.services import shap_service, llm_service
+from api.services import llm_service
 from api.services.inference_utils import predict_churn
-from ml.explain import build_llm_prompt
+from ml.explain import explain_customer
 
 router = APIRouter()
 
 
 @router.post("/simulate", response_model=SimulateResponse)
 def simulate(req: SimulateRequest):
-	# Merge modifications into customer
-	customer = dict(req.customer)
-	customer.update(req.modifications)
+    # Apply modifications to the customer profile
+    customer = {**req.customer, **req.modifications}
 
-	try:
-		proba, _, _ = predict_churn(customer)
-	except Exception as e:
-		raise HTTPException(status_code=400, detail=f"Simulation failed: {e}")
+    try:
+        proba, df, _ = predict_churn(customer)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Simulation failed: {e}")
 
-	try:
-		shap_context, shap_raw, base_value = shap_service.compute_shap_for_customer(customer)
-	except Exception:
-		shap_context, shap_raw, base_value = None, None, None
+    question = req.question or (
+        "Given this simulated customer profile, explain how the changes affect "
+        "churn risk and what retention action you recommend."
+    )
 
-	question = req.question or (
-		"Given this simulated customer profile, explain how the changes affect churn risk and what retention action you recommend."
-	)
-	answer = None
-	prompt = None
-	try:
-		prompt = build_llm_prompt(
-			churn_probability=proba,
-			shap_context=shap_context or "",
-			question=question,
-			customer_meta=req.customer_meta,
-		)
-		answer = llm_service.call_llm(prompt)
-	except Exception:
-		answer = None
+    try:
+        result = explain_customer(
+            customer_row=df,
+            churn_probability=proba,
+            question=question,
+            customer_meta=req.customer_meta,
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to build explanation: {e}")
 
-	return SimulateResponse(
-		churn_probability=proba,
-		shap_context=shap_context,
-		shap_raw=shap_raw,
-		base_value=base_value,
-		answer=answer,
-		prompt=prompt,
-	)
+    try:
+        answer = llm_service.call_llm(result["prompt"])
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"LLM call failed: {e}")
+
+    return SimulateResponse(
+        churn_probability=proba,
+        shap_context=result["shap_context"],
+        shap_raw=result["shap_raw"],
+        base_value=result["base_value"],
+        answer=answer,
+        prompt=result["prompt"],
+    )
