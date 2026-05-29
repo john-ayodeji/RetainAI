@@ -1,15 +1,11 @@
 xgboost
-tensorflow
 scikit-learn
 fastapi
 shap
-kagglehub
 numpy
 pandas
 imbalanced-learn
 uvicorn
-openai
 joblib
 python-dotenv
 requests
-google-genai
