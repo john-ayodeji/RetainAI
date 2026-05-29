@@ -13,7 +13,7 @@ def _call_openrouter(p: str, model: Optional[str] = None) -> str:
         "model": model_name,
         "messages": [{"role": "user", "content": p}],
         "temperature": 0.2,
-        "max_tokens": 400,
+        "max_tokens": 1500,
     }).encode("utf-8")
 
     req = urllib.request.Request(

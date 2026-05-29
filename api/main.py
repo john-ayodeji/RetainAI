@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import predict, explain, simulate
+from .routers import predict, explain, simulate, customers, search
 
 
 def create_app() -> FastAPI:
@@ -17,6 +17,8 @@ def create_app() -> FastAPI:
 	app.include_router(predict.router, prefix="/api")
 	app.include_router(explain.router, prefix="/api")
 	app.include_router(simulate.router, prefix="/api")
+	app.include_router(customers.router, prefix="/api")
+	app.include_router(search.router, prefix="/api")
 
 	@app.get("/")
 	def root():

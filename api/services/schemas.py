@@ -1,4 +1,5 @@
 from typing import Dict, Any, Optional
+from typing import List
 from pydantic import BaseModel
 
 
@@ -36,3 +37,28 @@ class SimulateRequest(BaseModel):
 class SimulateResponse(PredictionOutput):
 	answer: Optional[str] = None
 	prompt: Optional[str] = None
+
+
+class CustomerRecord(BaseModel):
+	data: Dict[str, Any]
+
+
+class CustomerListResponse(BaseModel):
+	page: int
+	limit: int
+	total: int
+	total_pages: int
+	previous: Optional[str] = None
+	next: Optional[str] = None
+	data: List[Dict[str, Any]]
+
+
+class UserSearchResponse(BaseModel):
+	page: int
+	limit: int
+	total: int
+	total_pages: int
+	previous: Optional[str] = None
+	next: Optional[str] = None
+	filters: Dict[str, Any]
+	data: List[Dict[str, Any]]

@@ -174,6 +174,7 @@ Rules you must follow:
 - Answer only based on the data provided above. Do not make up facts.
 - Be specific — reference actual values from the data, not generic advice.
 - Be concise. 3–5 sentences maximum unless a longer answer is genuinely needed.
+- where needed return estimate new churn risk in response to proposed retention actions, based on the SHAP values and your knowledge of how they interact.
 - If the question asks for a retention action, tie it directly to the top risk factors.
 - Do not repeat the churn probability or risk level back in your answer unless asked.
 
