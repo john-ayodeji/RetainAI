@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "https://silver-space-giggle-4jj4ppj994wwc5q66-8000.app.github.dev/api";
+  "https://retain-ai-alpha.vercel.app/api";
 
 function getCustomerId(row: any) {
   return row.CustomerID ?? row.CustomerId ?? row.customer_id ?? row.customerID ?? row.id ?? row.email ?? "";

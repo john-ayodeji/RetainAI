@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL ||
-  "https://silver-space-giggle-4jj4ppj994wwc5q66-8000.app.github.dev/api";
+  "https://retain-ai-alpha.vercel.app/api";
 
 // ─── tiny syntax highlighter ────────────────────────────────────────────────
 function JsonHighlight({ data }: { data: object }) {
